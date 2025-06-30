@@ -1,0 +1,8 @@
+{
+  "name": "api-design-v4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:aramay/api-design-v4.git",
+  "author": "aramay <kasper_341@hotmail.com>",
+  "license": "MIT"
+}
