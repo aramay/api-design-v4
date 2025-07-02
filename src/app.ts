@@ -1,7 +1,8 @@
-const express = require("express");
-const app = express();
+import express from "express";
+// const path = require("path");
+
 const PORT = 3000;
-const path = require("path");
+const app = express();
 
 app.get("/", (req, res) => {
     console.log("hello world");
@@ -12,4 +13,7 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server listening on Port ${PORT}`)
 })
+
+// 
+
 module.exports = app;
