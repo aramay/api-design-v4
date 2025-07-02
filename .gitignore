@@ -32,8 +32,5 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# vercel
-.vercel
-
-package-lock.json
-next.config.js
+# prisma
+/src/generated/prisma
