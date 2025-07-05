@@ -10,6 +10,7 @@ export const hashPassword = (password) => {
 }
 
 export const createJWT = (user) => {
+    console.log("user", user)
     const token = jwt.sign({
         id: user.id,
         username: user.username

@@ -4,8 +4,11 @@ import morgan from "morgan";
 // const path = require("path");
 import * as dotenv from "dotenv";
 import { protect } from "./modules/auth";
+import { createUser, signin } from "./handlers/user";
 
 dotenv.config();
+console.log(dotenv.config())
+console.log("process.env.JWT_SECRET ", process.env.JWT_SECRET)
 
 const PORT = 3000;
 const app = express();
@@ -21,6 +24,9 @@ app.get("/", (req, res) => {
 })
 
 app.use("/api", protect, router);
+
+app.post("/user", createUser)
+app.post("/signin", signin)
 
 app.listen(PORT, () => {
     console.log(`Server listening on Port ${PORT}`)

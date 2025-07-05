@@ -13,7 +13,8 @@ export const createUser = async (req, res) => {
 }
 
 export const signin = async (req, res) => {
-    const user = prisma.user.findUnique({
+    console.log("sigin route called")
+    const user = await prisma.user.findUnique({
         where: {
             username: req.body.username
         }
@@ -25,4 +26,6 @@ export const signin = async (req, res) => {
         res.json({message: "Try Again, please."})
         return;
     }
+    const token = createJWT(user)
+    res.json({token})
 }
