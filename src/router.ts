@@ -1,4 +1,5 @@
 import { Router } from "express"
+import { body, validationResult } from "express-validator";
 
 const router = Router()
 
@@ -11,7 +12,18 @@ router.get("/products", (req, res) => {
 })
 router.get("/product/:id", () => {})
 router.post("/product", () => {})
-router.put("/product/:id", () => {})
+
+router.put("/product/:id", body("name").isString(), (req, res) => {
+    const errors = validationResult(req)
+
+    console.log("errors ", errors)
+
+    if(!errors.isEmpty()) {
+        res.status(400);
+        return res.json({errors: errors.array()})
+    }
+    return res.json({message: "validation complete"})
+})
 // patch only updates fields
 // router.patch("/product/:id", () => {}) 
 router.delete("/product/:id", () => {})
