@@ -1,5 +1,6 @@
 import { Router } from "express"
-import { body, validationResult } from "express-validator";
+import { body, oneOf } from "express-validator";
+import { handleInputErrors } from "./modules/middleware";
 
 const router = Router()
 
@@ -11,17 +12,10 @@ router.get("/products", (req, res) => {
     res.json({message: "hello"})
 })
 router.get("/product/:id", () => {})
-router.post("/product", () => {})
+router.post("/product", [body("name").isString(), handleInputErrors], (req, res) => {})
 
-router.put("/product/:id", body("name").isString(), (req, res) => {
-    const errors = validationResult(req)
-
-    console.log("errors ", errors)
-
-    if(!errors.isEmpty()) {
-        res.status(400);
-        return res.json({errors: errors.array()})
-    }
+router.put("/product/:id", body("name").isString(), handleInputErrors, (req, res) => {
+    
     return res.json({message: "validation complete"})
 })
 // patch only updates fields
@@ -34,8 +28,23 @@ router.delete("/product/:id", () => {})
 
 router.get("/updates", () => {})
 router.get("/update/:id", () => {})
-router.post("/update", () => {})
-router.put("/update/:id", () => {})
+
+router.post("/update", [
+    body("title").exists(),
+    body("body").exists(),
+], (req, res) => {})
+
+router.put("/update/:id", [
+    body("title").optional(),
+    body("body").optional(),
+    body("version").optional(),
+    oneOf([
+        body("status").equals('IN_PROGRESS'),
+        body("status").equals('SHIPPED'),
+        body("status").equals('DEPRECATED')
+    ]),
+    handleInputErrors], () => {})
+
 router.delete("/update/:id", () => {})
 
 /**
@@ -45,7 +54,13 @@ router.delete("/update/:id", () => {})
 router.get("/updatespoints", () => {})
 router.get("/updatepoint/:id", () => {})
 router.post("/updatepoint", () => {})
-router.put("/updatepoint/:id", () => {})
+
+router.put("/updatepoint/:id", [
+    body("name").optional(),
+    body("description").optional(),
+    body("updatedId").exists().isString()
+], (req, res) => {})
+
 router.delete("/updatepoint/:id", () => {})
 
 export default router;
