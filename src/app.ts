@@ -23,8 +23,8 @@ app.get("/", (req, res) => {
     // res.send("hell world");
 })
 
-// app.use("/api", protect, router);
-app.use("/api", router);
+app.use("/api", protect, router);
+// app.use("/api", router);
 
 app.post("/user", createUser)
 app.post("/signin", signin)

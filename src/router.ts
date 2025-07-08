@@ -1,6 +1,7 @@
 import { Router } from "express"
 import { body, oneOf } from "express-validator";
 import { handleInputErrors } from "./modules/middleware";
+import { createProduct, getProducts } from "./handlers/product";
 
 const router = Router()
 
@@ -8,11 +9,18 @@ const router = Router()
  * Product
  */
 
-router.get("/products", (req, res) => {
-    res.json({message: "hello"})
+// this is an experiment route
+// router.get("/products/:userid", getProducts, (req, res) => {
+//     // res.json({message: "hello"})
+// })
+
+router.get("/products", getProducts, (req, res) => {
+    // res.json({message: "hello"})
 })
+
 router.get("/product/:id", () => {})
-router.post("/product", [body("name").isString(), handleInputErrors], (req, res) => {})
+
+router.post("/product", body("name").isString(), handleInputErrors, createProduct)
 
 router.put("/product/:id", body("name").isString(), handleInputErrors, (req, res) => {
     
